@@ -3,9 +3,9 @@ import React from 'react'
 import { StyledStartButton } from './styles/StyledStartButton'
 
 const StartButton = ({ onClick }) => (
-    <StyledStartButton onClick={onClick}>
+  <StyledStartButton onClick={onClick}>
         START GAME
-    </StyledStartButton>
+  </StyledStartButton>
 )
 
 export default StartButton
