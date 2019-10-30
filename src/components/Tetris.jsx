@@ -6,6 +6,7 @@ import { createStage, checkCollision } from '../gameHelpers'
 import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris'
 import { usePlayer } from '../hooks/usePlayer'
 import { useStage } from '../hooks/useStage'
+import { useInterval } from '../hooks/useInterval'
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null)
@@ -21,6 +22,7 @@ const Tetris = () => {
 
   const startGame = () => {
     setStage(createStage())
+    setDropTime(400)
     resetPlayer()
     setGameOver(false)
   }
@@ -55,8 +57,14 @@ const Tetris = () => {
       case keyCode === 38:
         playerRotate(stage, 1)
         break
+      default:
+        break
     }
   }
+
+  useInterval(() => {
+    drop()
+  }, dropTime)
 
   return (
     <StyledTetrisWrapper
