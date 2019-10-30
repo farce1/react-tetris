@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import Stage from './Stage'
 import Display from './Display'
 import StartButton from './StartButton'
@@ -7,6 +8,9 @@ import { StyledTetrisWrapper, StyledTetris } from './styles/StyledTetris'
 import { usePlayer } from '../hooks/usePlayer'
 import { useStage } from '../hooks/useStage'
 import { useInterval } from '../hooks/useInterval'
+import GamePad from './GamePad'
+
+const dropInterval = 300
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null)
@@ -22,7 +26,7 @@ const Tetris = () => {
 
   const startGame = () => {
     setStage(createStage())
-    setDropTime(400)
+    setDropTime(dropInterval)
     resetPlayer()
     setGameOver(false)
   }
@@ -40,7 +44,16 @@ const Tetris = () => {
   }
 
   const dropPlayer = () => {
+    setDropTime(null)
     drop()
+  }
+
+  const keyUp = ({ keyCode }) => {
+    if (!gameOver) {
+      if (keyCode === 40) {
+        setDropTime(dropInterval)
+      }
+    }
   }
 
   const move = ({ keyCode }) => {
@@ -62,15 +75,14 @@ const Tetris = () => {
     }
   }
 
-  useInterval(() => {
-    drop()
-  }, dropTime)
+  useInterval(() => drop(), dropTime)
 
   return (
     <StyledTetrisWrapper
       role='button'
       tabIndex='0'
       onKeyDown={e => move(e)}
+      onKeyUp={keyUp}
     >
       <StyledTetris>
         <Stage stage={stage} />
@@ -87,6 +99,7 @@ const Tetris = () => {
 
           <StartButton onClick={startGame} />
         </aside>
+        {isMobile && <GamePad movePlayer={movePlayer} dropPlayer={dropPlayer} stage={stage} playerRotate={playerRotate} />}
       </StyledTetris>
     </StyledTetrisWrapper>
   )
