@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { isMobile } from 'react-device-detect'
+//import { isMobile } from 'react-device-detect'
 import Stage from './Stage'
 import Display from './Display'
 import StartButton from './StartButton'
@@ -10,7 +10,7 @@ import { useStage } from '../hooks/useStage'
 import { useInterval } from '../hooks/useInterval'
 import GamePad from './GamePad'
 
-const dropInterval = 300
+const dropInterval = 500
 
 const Tetris = () => {
   const [dropTime, setDropTime] = useState(null)
@@ -99,7 +99,7 @@ const Tetris = () => {
 
           <StartButton onClick={startGame} />
         </aside>
-        {isMobile && <GamePad movePlayer={movePlayer} dropPlayer={dropPlayer} stage={stage} playerRotate={playerRotate} />}
+        {/* <GamePad movePlayer={movePlayer} dropPlayer={dropPlayer} stage={stage} playerRotate={playerRotate} /> */}
       </StyledTetris>
     </StyledTetrisWrapper>
   )
